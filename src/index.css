@@ -59,7 +59,7 @@ h3 {
 }
 .ib {
   display: inline-block;
-  margin: 5px 0px 0 10px;
+  margin: 0 120px 0 10px;
 }
 .page {
   width: 80%;
@@ -75,6 +75,8 @@ h3 {
   white-space: nowrap;
   border-radius: 2px;
   padding: 0 10px;
+  margin-top: 5px;
+  margin-right: -25px;
 }
 .row {
   display: flex;
@@ -99,6 +101,63 @@ h3 {
   width: 110px;
   margin: 5px;
 }
+.btn_disabled {
+  background-color: lightgray;
+  pointer-events: none;
+}
 .btn:hover {
   background-color: #6d8cb0
+}
+
+.search-field {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 110px;
+  font-size: 18px;
+  min-width: 470px;
+  pointer-events: none;
+}
+
+.search-field fieldset {
+  width: 230px;
+  float: right;
+  position: relative;
+  margin-right: 55px;
+  pointer-events: auto;
+}
+
+form label {
+  margin-right: 15px;
+  line-height: 32px;
+}
+
+form .radio {
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  transition: 0.2s all linear;
+  outline: none;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+fieldset .input-wrapper {
+  display: inline-block;
+  position: relative;
+}
+fieldset .input-wrapper:focus-within:after {
+  content: 'Например: "Native"';
+  position: absolute;
+  left: 104%;
+  white-space: nowrap;
+  top: 0%;
+  z-index: 1;
+  background: #f9f9f9;
+  font-size: 11px;
+  padding: 5px 10px;
+  border: 1px solid #000;
+  box-shadow: 5px 5px 8px 0px rgba(119, 119, 119, 0.64);
+  -moz-box-shadow: 5px 5px 8px 0px rgba(119, 119, 119, 0.64);
+  -webkit-box-shadow: 5px 5px 8px 0px rgba(119, 119, 119, 0.64);
 }

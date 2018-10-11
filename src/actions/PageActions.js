@@ -12,27 +12,55 @@ function filterPhotos(photos, year) {
   return filteredPhotos
 }
 
-export function getPhotos(year) {
+export function getPhotos(year, search) {
   return dispatch => {
     dispatch({
       type: GET_PHOTOS_REQUEST,
       payload: year,
     })
 
-    //eslint-disable-next-line no-undef
-    VK.Api.call('photos.getAll', { extended: 1, v: '5.80' }, r => {
-      try {
-        const filteredPhotos = filterPhotos(r.response.items, year)
-        dispatch({
-          type: GET_PHOTOS_SUCCESS,
-          payload: filteredPhotos,
-        })
-      } catch (e) {
-        dispatch({
-          type: GET_PHOTOS_FAIL,
-          payload: new Error(e),
-        })
-      }
-    })
+    if (search.type === 'all') {
+      //eslint-disable-next-line no-undef
+      VK.Api.call(
+        'photos.search',
+        {
+          q: search.word,
+          count: search.word ? 200 : 0,
+          start_time: new Date(year, 1).getTime() / 1000,
+          end_time: new Date(year, 12).getTime() / 1000,
+          extended: 1,
+          v: '5.80',
+        },
+        r => {
+          try {
+            dispatch({
+              type: GET_PHOTOS_SUCCESS,
+              payload: r.response.items,
+            })
+          } catch (e) {
+            dispatch({
+              type: GET_PHOTOS_FAIL,
+              payload: new Error(e),
+            })
+          }
+        }
+      )
+    } else if (search.type === 'personal') {
+      //eslint-disable-next-line no-undef
+      VK.Api.call('photos.getAll', { extended: 1, v: '5.80' }, r => {
+        try {
+          const filteredPhotos = filterPhotos(r.response.items, year)
+          dispatch({
+            type: GET_PHOTOS_SUCCESS,
+            payload: filteredPhotos,
+          })
+        } catch (e) {
+          dispatch({
+            type: GET_PHOTOS_FAIL,
+            payload: new Error(e),
+          })
+        }
+      })
+    }
   }
 }
